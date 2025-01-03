@@ -7,6 +7,7 @@ import ProfileButton from "../Navigation/ProfileButton";
 import lan from "./LandingPage.module.css";
 import { IoIosPaw } from "react-icons/io";
 import DemoButton from "../Navigation/DemoButton";
+import Footer from "../Footer";
 
 function LandingPage() {
   const dispatch = useDispatch();
@@ -174,6 +175,7 @@ function LandingPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
