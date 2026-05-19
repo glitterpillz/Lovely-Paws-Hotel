@@ -33,7 +33,4 @@ RUN pip install --upgrade pip \
 
 COPY . .
 
-RUN flask db upgrade
-RUN flask seed all
-
-CMD gunicorn app:app
+CMD flask db upgrade && flask seed all && gunicorn app:app
