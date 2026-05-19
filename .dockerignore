@@ -2,6 +2,10 @@ instance/*
 instance
 node_modules
 .env
+.flaskenv
 .venv
 dev.db
+.git
 .gitignore
+__pycache__
+*.pyc
