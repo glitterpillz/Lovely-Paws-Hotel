@@ -13,4 +13,4 @@ RUN pip install --upgrade pip \
 
 COPY . .
 
-CMD flask db upgrade && gunicorn app:app
+CMD gunicorn app:app
