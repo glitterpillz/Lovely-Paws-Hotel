@@ -1,6 +1,6 @@
 from datetime import date
 from app.models import db, Pet, environment, SCHEMA
-from sqlalchemy.sql import text
+from sqlalchemy import text
 
 
 def seed_pets():
@@ -174,7 +174,8 @@ def seed_pets():
 
 def undo_pets():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.services RESTART IDENTITY CASCADE;")
+        db.session.execute(text(f"TRUNCATE table {SCHEMA}.pets RESTART IDENTITY CASCADE;"))
     else:
-        db.session.execute(text("DELETE FROM services"))
+        db.session.execute(text("DELETE FROM pets"))
+
     db.session.commit()

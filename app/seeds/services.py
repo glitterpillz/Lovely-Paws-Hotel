@@ -1,5 +1,5 @@
 from app.models import db, Service, environment, SCHEMA
-from sqlalchemy.sql import text
+from sqlalchemy import text
 from .users import User
 
 def seed_services():

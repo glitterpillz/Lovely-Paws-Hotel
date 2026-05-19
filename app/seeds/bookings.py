@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from app.models import Booking, db, environment, SCHEMA
-from sqlalchemy.sql import text
+from sqlalchemy import text
 from .services import Service
 
 def seed_bookings():
@@ -57,8 +57,8 @@ def seed_bookings():
 
 def undo_bookings():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.services RESTART IDENTITY CASCADE;")
+        db.session.execute(text(f"TRUNCATE table {SCHEMA}.bookings RESTART IDENTITY CASCADE;"))
     else:
-        db.session.execute(text("DELETE FROM services"))
-        
+        db.session.execute(text("DELETE FROM bookings"))
+
     db.session.commit()
