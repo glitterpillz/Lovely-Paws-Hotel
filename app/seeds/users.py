@@ -1,5 +1,5 @@
 from app.models import db, User, environment, SCHEMA
-from sqlalchemy.sql import text
+from sqlalchemy import text
 
 def seed_users():
     demo_client = User(

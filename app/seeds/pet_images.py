@@ -1,4 +1,5 @@
 from app.models import db, PetImage, environment, SCHEMA
+from sqlalchemy import text
 
 def seed_pet_images():
     pet_images = [
@@ -60,7 +61,8 @@ def seed_pet_images():
 
 def undo_pet_images():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.pet_images RESTART IDENTITY CASCADE;")
+        db.session.execute(text(f"TRUNCATE table {SCHEMA}.pet_images RESTART IDENTITY CASCADE;"))
     else:
-        db.session.execute("DELETE FROM pet_images")
+        db.session.execute(text("DELETE FROM pet_images"))
+
     db.session.commit()
