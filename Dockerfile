@@ -1,8 +1,8 @@
-FROM python:3.9.18-alpine3.18
+FROM python:3.12-slim
 
-RUN apk add build-base
-
-RUN apk add postgresql-dev gcc python3-dev musl-dev
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends gcc libpq-dev \
+  && rm -rf /var/lib/apt/lists/*
 
 ARG FLASK_APP
 ARG FLASK_ENV
@@ -14,6 +14,11 @@ ARG AWS_BUCKET_REGION
 ARG AWS_ACCESS_KEY_ID
 ARG AWS_SECRET_ACCESS_KEY
 
+ENV FLASK_APP=${FLASK_APP}
+ENV FLASK_ENV=${FLASK_ENV}
+ENV DATABASE_URL=${DATABASE_URL}
+ENV SCHEMA=${SCHEMA}
+ENV SECRET_KEY=${SECRET_KEY}
 ENV AWS_BUCKET_NAME=${AWS_BUCKET_NAME}
 ENV AWS_BUCKET_REGION=${AWS_BUCKET_REGION}
 ENV AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -23,12 +28,11 @@ WORKDIR /var/www
 
 COPY requirements.txt .
 
-RUN pip install -r requirements.txt
-RUN pip install psycopg2
+RUN pip install --upgrade pip \
+  && pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
 RUN flask db upgrade
-RUN flask seed all
-CMD gunicorn app:app
 
+CMD gunicorn app:app
