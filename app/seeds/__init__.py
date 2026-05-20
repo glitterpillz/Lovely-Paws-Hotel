@@ -6,19 +6,10 @@ from .pets import seed_pets, undo_pets
 from .reviews import seed_reviews, undo_reviews
 from .pet_images import seed_pet_images, undo_pet_images
 
-from app.models.db import db, environment, SCHEMA
-
 seed_commands = AppGroup('seed')
 
 @seed_commands.command('all')
 def seed():
-    if environment == 'production':
-        undo_bookings()
-        undo_pet_images()
-        undo_pets()
-        undo_reviews()
-        undo_services()
-        undo_users()
     seed_users()
     seed_services()
     seed_reviews()
@@ -28,9 +19,9 @@ def seed():
 
 @seed_commands.command('undo')
 def undo():
-    undo_users()
-    undo_services()
-    undo_reviews()
-    undo_pets()
-    undo_pet_images()
     undo_bookings()
+    undo_pet_images()
+    undo_pets()
+    undo_reviews()
+    undo_services()
+    undo_users()
