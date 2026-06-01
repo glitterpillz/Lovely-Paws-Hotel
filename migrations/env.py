@@ -11,7 +11,7 @@ from sqlalchemy import pool
 
 
 environment = os.getenv("FLASK_ENV")
-SCHEMA = os.environ.get("SCHEMA")
+# SCHEMA = os.environ.get("SCHEMA")
 
 config = context.config
 
@@ -57,8 +57,8 @@ def run_migrations_online():
     )
 
     with connectable.connect() as connection:
-        if environment == "production" and SCHEMA:
-            connection.exec_driver_sql(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
+        # if environment == "production" and SCHEMA:
+        #     connection.exec_driver_sql(f"CREATE SCHEMA IF NOT EXISTS {SCHEMA}")
 
         context.configure(
             connection=connection,
@@ -68,8 +68,8 @@ def run_migrations_online():
         )
 
         with context.begin_transaction():
-            if environment == "production" and SCHEMA:
-                context.execute(f"SET search_path TO {SCHEMA}")
+            # if environment == "production" and SCHEMA:
+            #     context.execute(f"SET search_path TO {SCHEMA}")
 
             context.run_migrations()
 
